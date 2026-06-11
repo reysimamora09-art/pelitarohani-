@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pelita Rohani</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .hidden-page { display: none !important; }
+        
+        /* Chat Scrollbar Customization */
+        .chat-scroll::-webkit-scrollbar { width: 6px; }
+        .chat-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .chat-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        
+        /* Typing indicator animation */
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        /* Tooltip sederhana */
+        .group:hover .tooltip { display: block; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-br from-blue-700 to-blue-500 text-white text-center py-12 md:py-16 px-4 shadow-lg relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full bg-white opacity-5 pointer-events-none" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 20px 20px;"></div>
+        <div class="relative z-10 fade-in">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-3 flex items-center justify-center gap-3 cursor-pointer" onclick="showPage('beranda')">
+                <i data-lucide="sun" class="w-10 h-10 text-yellow-300"></i>
+                Pelita Rohani
+            </h1>
+            <p class="text-lg md:text-xl font-light text-blue-50">Menjadi Terang Melalui Firman Tuhan</p>
+        </div>
+    </header>
+
+    <!-- Navigation Section -->
+    <nav class="bg-blue-900 shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex overflow-x-auto no-scrollbar justify-start md:justify-center items-center py-3 space-x-2 md:space-x-4 whitespace-nowrap">
+                <button onclick="showPage('beranda')" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-800 hover:bg-blue-700 transition flex items-center gap-2" id="nav-beranda">
+                    <i data-lucide="home" class="w-4 h-4"></i> Beranda
+                </button>
+                <button onclick="showPage('renungan')" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-blue-100 hover:text-white hover:bg-blue-800 transition flex items-center gap-2" id="nav-renungan">
+                    <i data-lucide="book-open" class="w-4 h-4"></i> Renungan
+                </button>
+                <button onclick="showPage('kasih')" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-blue-100 hover:text-white hover:bg-blue-800 transition flex items-center gap-2" id="nav-kasih">
+                    <i data-lucide="heart" class="w-4 h-4"></i> Kasih
+                </button>
+                <button onclick="showPage('iman')" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-blue-100 hover:text-white hover:bg-blue-800 transition flex items-center gap-2" id="nav-iman">
+                    <i data-lucide="shield" class="w-4 h-4"></i> Iman
+                </button>
+                <button onclick="showPage('harapan')" class="nav-btn px-4 py-2 rounded-md text-sm font-medium text-blue-100 hover:text-white hover:bg-blue-800 transition flex items-center gap-2" id="nav-harapan">
+                    <i data-lucide="anchor" class="w-4 h-4"></i> Harapan
+                </button>
+                <button onclick="showPage('ai')" class="nav-btn px-4 py-2 rounded-md text-sm font-bold text-yellow-300 hover:text-yellow-100 hover:bg-blue-800 transition flex items-center gap-2 border border-yellow-400/30" id="nav-ai">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i> Tanya AI
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-6xl mx-auto w-full p-4 md:p-8">
+        
+        <!-- ================= HALAMAN BERANDA ================= -->
+        <div id="page-beranda" class="page-section fade-in">
+            <section class="text-center py-8 md:py-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-800 mb-4">Selamat Datang di Pelita Rohani</h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">Temukan renungan, ayat Alkitab, motivasi rohani, dan penguatan iman setiap hari untuk membimbing langkah hidup Anda.</p>
+            </section>
+
+            <!-- Verse of the Day -->
+            <section class="mb-12">
+                <div class="bg-blue-50 border-l-4 border-blue-500 rounded-r-xl shadow-sm p-6 md:p-10 max-w-3xl mx-auto relative overflow-hidden">
+                    <i data-lucide="quote" class="absolute top-4 right-4 w-24 h-24 text-blue-100 opacity-50 -z-10 rotate-180"></i>
+                    <div class="text-center relative z-10">
+                        <h2 class="text-sm font-bold text-blue-600 uppercase tracking-widest mb-4">Ayat Hari Ini</h2>
+                        <blockquote class="text-xl md:text-2xl font-serif italic text-slate-700 leading-relaxed mb-6">
+                            "Firman-Mu itu pelita bagi kakiku dan terang bagi jalanku."
+                        </blockquote>
+                        <p class="font-bold text-slate-900 bg-white inline-block px-4 py-1 rounded-full text-sm shadow-sm">
+                            Mazmur 119:105
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Articles Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <div onclick="showPage('renungan')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-blue-200 transition-all cursor-pointer group">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <i data-lucide="book-open"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">Renungan Harian</h2>
+                    <p class="text-slate-600 mb-4 line-clamp-2">Tuhan selalu menyertai setiap langkah kehidupan kita. Ketika menghadapi kesulitan, temukan damai-Nya yang melampaui segala akal...</p>
+                </div>
+
+                <div onclick="showPage('kasih')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-rose-200 transition-all cursor-pointer group">
+                    <div class="w-12 h-12 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                        <i data-lucide="heart"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-rose-600 transition-colors">Kasih</h2>
+                    <p class="text-slate-600 mb-4 line-clamp-2">Kasih adalah dasar kehidupan orang percaya. Pelajari lebih dalam tentang Kasih Agapé yang tanpa syarat dan penuh pengorbanan...</p>
+                </div>
+
+                <div onclick="showPage('iman')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-amber-200 transition-all cursor-pointer group">
+                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                        <i data-lucide="shield"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-amber-600 transition-colors">Iman</h2>
+                    <p class="text-slate-600 mb-4 line-clamp-2">Iman membuat kita tetap berdiri teguh. Bagaimana menumbuhkan iman yang bahkan sebesar biji sesawi untuk memindahkan gunung...</p>
+                </div>
+
+                <div onclick="showPage('harapan')" class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md hover:border-emerald-200 transition-all cursor-pointer group">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                        <i data-lucide="anchor"></i>
+                    </div>
+                    <h2 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-emerald-600 transition-colors">Harapan</h2>
+                    <p class="text-slate-600 mb-4 line-clamp-2">Harapan dalam Tuhan tidak pernah mengecewakan. Temukan sauh yang kuat bagi jiwamu di tengah ketidakpastian dunia ini...</p>
+                </div>
+                
+                <!-- Card Tanya AI -->
+                <div onclick="showPage('ai')" class="bg-gradient-to-br from-blue-800 to-blue-600 p-6 rounded-2xl shadow-md hover:shadow-lg transition-all cursor-pointer group md:col-span-2 lg:col-span-2 flex flex-col justify-center relative overflow-hidden text-white">
+                    <i data-lucide="sparkles" class="absolute top-4 right-4 w-32 h-32 text-white opacity-10 group-hover:scale-110 transition-transform duration-500"></i>
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 bg-white/20 text-white rounded-xl flex items-center justify-center mb-4 backdrop-blur-sm">
+                            <i data-lucide="message-circle"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-2">Tanya Pelita AI</h2>
+                        <p class="text-blue-100 mb-4 max-w-md">Punya pertanyaan tentang Alkitab, butuh ayat penguatan, atau ingin berdiskusi tentang kerohanian? Asisten AI kami siap membantu Anda 24/7.</p>
+                        <span class="inline-flex font-bold bg-white text-blue-800 px-4 py-2 rounded-lg items-center gap-2 shadow-sm">Coba Sekarang <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN ARTIKEL (Diperluas) ================= -->
+        
+        <!-- Halaman Renungan -->
+        <div id="page-renungan" class="page-section hidden-page max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-100">
+            <button onclick="showPage('beranda')" class="mb-6 text-blue-600 hover:text-blue-800 flex items-center gap-2 text-sm font-bold bg-blue-50 px-4 py-2 rounded-full w-max transition-colors"><i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali</button>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Menemukan Damai di Tengah Badai</h1>
+            
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-5 mb-8 rounded-r-lg">
+                <p class="italic text-slate-700 text-lg">"Janganlah hendaknya kamu kuatir tentang apapun juga, tetapi nyatakanlah dalam segala hal keinginanmu kepada Allah dalam doa dan permohonan dengan ucapan syukur. Damai sejahtera Allah, yang melampaui segala akal, akan memelihara hati dan pikiranmu dalam Kristus Yesus."</p>
+                <p class="font-bold mt-2 text-blue-800">— Filipi 4:6-7</p>
+            </div>
+            
+            <div class="space-y-6 text-slate-700 leading-relaxed text-lg pb-4">
+                <p>Dalam perjalanan hidup ini, badai masalah seringkali datang tanpa peringatan. Bisa berupa krisis keuangan yang tiba-tiba, kondisi kesehatan yang memburuk, atau konflik dalam hubungan keluarga yang menguras emosi. Saat menghadapinya, respons alami manusiawi kita adalah panik, cemas, dan berusaha mengambil alih kendali dengan kekuatan sendiri.</p>
+                
+                <h3 class="text-2xl font-bold text-slate-800 mt-6 mb-2">Mengapa Badai Diizinkan Terjadi?</h3>
+                <p>Kita sering bertanya, "Jika Tuhan peduli, mengapa Dia membiarkan badai ini menimpa saya?" Kenyataannya, firman Tuhan tidak pernah menjanjikan perjalanan hidup tanpa masalah. Namun, Ia menjanjikan <strong>penyertaan-Nya</strong> di tengah masalah tersebut. Badai diizinkan bukan untuk menghancurkan kita, melainkan untuk melatih otot-otot rohani kita, memangkas kesombongan kita, dan mengajar kita untuk bergantung sepenuhnya pada kedaulatan-Nya.</p>
+
+                <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 my-6">
+                    <h4 class="font-bold text-blue-800 mb-3 flex items-center gap-2"><i data-lucide="check-circle-2" class="w-5 h-5"></i> Langkah Praktis Menemukan Damai:</h4>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>Ubah Kekuatiran Menjadi Doa:</strong> Daripada memikirkan skenario terburuk (overthinking), gunakan energi tersebut untuk berdoa. Berbicara jujurlah kepada Tuhan tentang apa yang Anda takutkan.</li>
+                        <li><strong>Mulai dengan Ucapan Syukur:</strong> Filipi 4 mengajarkan untuk menyertakan "ucapan syukur" dalam doa kita. Mengingat kebaikan Tuhan di masa lalu akan memberi kita keyakinan bahwa Dia juga sanggup menolong kita di masa kini.</li>
+                        <li><strong>Batasi "Suara" Dunia:</strong> Di tengah krisis, terlalu banyak mendengar pendapat orang atau berita negatif hanya akan menambah kepanikan. Perbanyaklah mendengar "suara" Tuhan melalui pembacaan Alkitab.</li>
+                    </ul>
+                </div>
+
+                <p>Rasul Paulus menulis surat Filipi ini bukan dari atas kursi yang nyaman, melainkan dari dalam penjara yang gelap. Namun, ia justru mengajarkan kita tentang damai sejahtera yang "melampaui segala akal." Artinya, secara logika situasi kita mungkin sedang hancur, tetapi di dalam hati kita tetap ada ketenangan yang tidak bisa dijelaskan oleh dunia.</p>
+
+                <p class="mt-8 p-6 bg-blue-900 text-white rounded-xl text-center italic">
+                    "Tuhan Yesus, terima kasih karena Engkau selalu ada bersamaku. Saat hatiku diliputi kecemasan, tolong ingatkan aku akan kasih dan kuasa-Mu. Gantikanlah ketakutanku dengan damai sejahtera-Mu. Di dalam nama Yesus, Amin."
+                </p>
+            </div>
+        </div>
+
+        <!-- Halaman Kasih -->
+        <div id="page-kasih" class="page-section hidden-page max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-100">
+            <button onclick="showPage('beranda')" class="mb-6 text-rose-600 hover:text-rose-800 flex items-center gap-2 text-sm font-bold bg-rose-50 px-4 py-2 rounded-full w-max transition-colors"><i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali</button>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Kasih Agapé: Mengasihi Tanpa Syarat</h1>
+            
+            <div class="bg-rose-50 border-l-4 border-rose-500 p-5 mb-8 rounded-r-lg">
+                <p class="italic text-slate-700 text-lg">"Kasih itu sabar; kasih itu murah hati; ia tidak cemburu. Ia tidak memegahkan diri dan tidak sombong. Ia tidak melakukan yang tidak sopan dan tidak mencari keuntungan diri sendiri."</p>
+                <p class="font-bold mt-2 text-rose-800">— 1 Korintus 13:4-5</p>
+            </div>
+            
+            <div class="space-y-6 text-slate-700 leading-relaxed text-lg pb-4">
+                <p>Dunia sering kali mengajarkan kasih yang transaksional: "Aku akan mengasihimu jika kamu mengasihiku" atau "Aku akan memaafkanmu jika kamu meminta maaf terlebih dahulu." Namun, kasih Kristus membalikkan logika tersebut. Alkitab menyebutnya <em>Agapé</em>, yakni kasih yang tidak bersyarat, rela berkorban, dan sebuah keputusan yang proaktif, bukan sekadar respons reaktif.</p>
+                
+                <h3 class="text-2xl font-bold text-slate-800 mt-6 mb-2">Mengasihi Mereka yang Sulit Dikasihi</h3>
+                <p>Mudah bagi kita untuk mengasihi orang tua, anak, atau sahabat yang selalu bersikap baik kepada kita. Tetapi, Yesus menaikkan standarnya dengan mengatakan, <em>"Kasihilah musuhmu dan berdoalah bagi mereka yang menganiaya kamu" (Matius 5:44)</em>. Ini adalah salah satu perintah yang paling sulit dilakukan oleh daging (sifat manusiawi) kita.</p>
+                <p>Mengapa kita harus mengasihi orang yang menyakiti kita? Jawabannya ada pada <strong>1 Yohanes 4:19: "Kita mengasihi, karena Allah lebih dahulu mengasihi kita."</strong> Ketika kita menyadari betapa banyaknya dosa dan pelanggaran kita yang telah diampuni oleh Kristus di kayu salib, hati kita akan dilunakkan untuk membagikan pengampunan itu kepada orang lain.</p>
+
+                <div class="grid md:grid-cols-2 gap-4 my-6">
+                    <div class="bg-rose-50 p-5 rounded-xl">
+                        <h4 class="font-bold text-rose-800 mb-2 flex items-center gap-2"><i data-lucide="heart-handshake" class="w-5 h-5"></i> Kasih adalah Pengampunan</h4>
+                        <p class="text-base">Melepaskan hak untuk membalas dendam. Pengampunan tidak berarti menyetujui kesalahan orang tersebut, melainkan melepaskan diri kita dari penjara kepahitan.</p>
+                    </div>
+                    <div class="bg-rose-50 p-5 rounded-xl">
+                        <h4 class="font-bold text-rose-800 mb-2 flex items-center gap-2"><i data-lucide="gift" class="w-5 h-5"></i> Kasih adalah Tindakan</h4>
+                        <p class="text-base">Kasih bukan sebatas emosi yang hangat di dada, melainkan tindakan nyata seperti membantu rekan kerja yang sedang kesulitan atau meluangkan waktu mendengar keluh kesah keluarga.</p>
+                    </div>
+                </div>
+
+                <p>Hari ini, mari kita periksa hati kita. Adakah seseorang yang selama ini sulit Anda maafkan? Adakah hubungan yang terasa dingin? Mintalah Roh Kudus untuk memampukan Anda mengasihi dengan kasih Agapé. Ingatlah bahwa kasih adalah ciri khas utama pengikut Kristus (Yohanes 13:35).</p>
+            </div>
+        </div>
+
+        <!-- Halaman Iman -->
+        <div id="page-iman" class="page-section hidden-page max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-100">
+            <button onclick="showPage('beranda')" class="mb-6 text-amber-600 hover:text-amber-800 flex items-center gap-2 text-sm font-bold bg-amber-50 px-4 py-2 rounded-full w-max transition-colors"><i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali</button>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Iman Sebesar Biji Sesawi</h1>
+            
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-5 mb-8 rounded-r-lg">
+                <p class="italic text-slate-700 text-lg">"Iman adalah dasar dari segala sesuatu yang kita harapkan dan bukti dari segala sesuatu yang tidak kita lihat."</p>
+                <p class="font-bold mt-2 text-amber-800">— Ibrani 11:1</p>
+            </div>
+            
+            <div class="space-y-6 text-slate-700 leading-relaxed text-lg pb-4">
+                <p>Seringkali kita merasa iman kita terlalu kecil untuk menghadapi gunung tantangan di depan mata. Kita melihat besarnya masalah, angka hutang, vonis dokter, atau rusaknya hubungan, lalu kita mulai meragukan apakah Tuhan benar-benar sanggup menolong. Namun, Yesus menegaskan bahwa ukuran iman bukanlah yang utama. Ia berkata bahwa iman sebesar <em>biji sesawi</em> saja sudah cukup untuk memindahkan gunung.</p>
+                
+                <h3 class="text-2xl font-bold text-slate-800 mt-6 mb-2">Bukan Sekadar Percaya Buta</h3>
+                <p>Iman Kristen bukanlah <em>"blind faith"</em> (kepercayaan buta) yang berharap pada sesuatu yang tidak pasti. Iman kita memiliki objek yang nyata dan hidup, yaitu <strong>Yesus Kristus</strong>. Biji sesawi memang sangat kecil, tetapi ia mengandung <em>kehidupan</em> di dalamnya. Ketika ditanam ke tanah (ditujukan kepada kedaulatan Tuhan), benih kecil itu akan bertumbuh menembus kerasnya tanah dan menjadi pohon yang besar.</p>
+
+                <h3 class="text-2xl font-bold text-slate-800 mt-6 mb-2">Iman yang Diuji Bagaikan Emas</h3>
+                <p>Rasul Petrus menggambarkan iman kita jauh lebih berharga daripada emas yang fana (1 Petrus 1:7). Emas dimurnikan dengan cara dibakar dalam api bersuhu tinggi agar kotorannya hilang. Demikian pula iman kita. Ujian, tekanan, dan doa yang seolah belum dijawab adalah "api penyucian" yang Tuhan pakai untuk membuat iman kita semakin murni, tahan banting, dan tidak mudah goyah.</p>
+
+                <div class="bg-amber-50 p-5 rounded-xl border border-amber-200 my-6">
+                    <h4 class="font-bold text-amber-800 mb-3 flex items-center gap-2"><i data-lucide="sprout" class="w-5 h-5"></i> Bagaimana Merawat Benih Iman Anda?</h4>
+                    <ul class="list-decimal pl-5 space-y-2 text-base">
+                        <li><strong>Mendengar Firman Tuhan:</strong> <em>"Jadi, iman timbul dari pendengaran, dan pendengaran oleh firman Kristus." (Roma 10:17)</em>. Semakin sering Anda membaca Alkitab, semakin kuat pondasi iman Anda.</li>
+                        <li><strong>Melangkah dalam Ketaatan:</strong> Iman membutuhkan aksi. Sama seperti Petrus yang harus keluar dari perahu agar bisa berjalan di atas air, kita juga harus berani mengambil keputusan yang sesuai kehendak Tuhan meski terasa menakutkan.</li>
+                        <li><strong>Mengingat Kesaksian Hidup:</strong> Ingatlah masa-masa sulit di masa lalu di mana Tuhan terbukti telah menolong dan meluputkan Anda. Tuhan yang sama akan menolong Anda hari ini.</li>
+                    </ul>
+                </div>
+
+                <p>Hari ini, apapun rupa "gunung" masalah Anda, hadapilah dengan iman. Tidak perlu iman yang sempurna, cukup iman yang tulus dan bersandar penuh pada kebesaran-Nya.</p>
+            </div>
+        </div>
+
+        <!-- Halaman Harapan -->
+        <div id="page-harapan" class="page-section hidden-page max-w-3xl mx-auto bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-slate-100">
+            <button onclick="showPage('beranda')" class="mb-6 text-emerald-600 hover:text-emerald-800 flex items-center gap-2 text-sm font-bold bg-emerald-50 px-4 py-2 rounded-full w-max transition-colors"><i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali</button>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Harapan yang Menjadi Jangkar Jiwa</h1>
+            
+            <div class="bg-emerald-50 border-l-4 border-emerald-500 p-5 mb-8 rounded-r-lg">
+                <p class="italic text-slate-700 text-lg">"Pengharapan itu adalah sauh yang kuat dan aman bagi jiwa kita, yang telah dilabuhkan sampai ke belakang tabir."</p>
+                <p class="font-bold mt-2 text-emerald-800">— Ibrani 6:19</p>
+            </div>
+            
+            <div class="space-y-6 text-slate-700 leading-relaxed text-lg pb-4">
+                <p>Di dunia yang terus berubah dan seringkali dipenuhi dengan berita buruk, mudah sekali kita terseret arus keputusasaan. Kegagalan yang berulang, rencana yang berantakan, atau masa depan yang tampak suram bisa membuat kita kehilangan semangat hidup. Namun, sebagai orang percaya, kita diundang untuk hidup dalam dimensi yang berbeda—dimensi pengharapan ilahi.</p>
+                
+                <h3 class="text-2xl font-bold text-slate-800 mt-6 mb-2">Optimisme Manusia vs Pengharapan Ilahi</h3>
+                <p>Dunia mengajarkan kita untuk menjadi <em>optimis</em>. Optimisme biasanya didasarkan pada situasi ("Semoga ekonomi membaik bulan depan," "Semoga bos saya sedang dalam suasana hati yang baik"). Masalahnya, ketika situasinya tidak sesuai ekspektasi, optimisme itu akan hancur.</p>
+                <p>Sebaliknya, <strong>Pengharapan Kristen (Hope)</strong> tidak dibangun di atas situasi yang berubah-ubah, melainkan di atas Batu Karang yang teguh: Karakter Allah yang tidak pernah berubah dan janji-Nya yang selalu ditepati (Yosua 21:45). Itulah sebabnya pengharapan disebut sebagai "jangkar (sauh) jiwa". Di saat badai laut kehidupan mengamuk, jangkar ini menahan kapal kehidupan kita agar tidak karam.</p>
+
+                <h3 class="text-2xl font-bold text-slate-800 mt-6 mb-2">Mengubah Penderitaan Menjadi Pengharapan</h3>
+                <p>Rasul Paulus menulis sesuatu yang luar biasa dalam <em>Roma 5:3-4: "Kita malah bermegah juga dalam kesengsaraan kita, karena kita tahu, bahwa kesengsaraan itu menimbulkan ketekunan, dan ketekunan menimbulkan tahan uji dan tahan uji menimbulkan pengharapan."</em></p>
+                <p>Tuhan seringkali memakai tungku penderitaan untuk menghasilkan karakter yang tangguh. Melalui air mata dan proses yang menyakitkan, kita diajarkan untuk memindahkan tumpuan harapan kita—dari yang awalnya bersandar pada manusia, harta, atau kemampuan diri sendiri—menjadi bersandar sepenuhnya kepada Tuhan. Ujung dari proses ini bukanlah kehancuran, melainkan pengharapan yang tidak mengecewakan.</p>
+
+                <div class="bg-emerald-900 text-emerald-50 p-6 rounded-xl mt-8 text-center shadow-md">
+                    <i data-lucide="sun-dim" class="w-8 h-8 text-yellow-400 mx-auto mb-3"></i>
+                    <p class="italic text-lg">"Semoga Allah, sumber pengharapan, memenuhi kamu dengan segala sukacita dan damai sejahtera dalam iman kamu, supaya oleh kekuatan Roh Kudus kamu berlimpah-limpah dalam pengharapan."</p>
+                    <p class="font-bold mt-2 text-emerald-300">— Roma 15:13</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= HALAMAN ASISTEN AI ================= -->
+        <div id="page-ai" class="page-section hidden-page max-w-4xl mx-auto">
+            <button onclick="showPage('beranda')" class="mb-4 text-blue-600 hover:text-blue-800 flex items-center gap-2 text-sm font-bold bg-blue-50 px-4 py-2 rounded-full w-max transition-colors">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali
+            </button>
+            
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-[650px]">
+                <!-- Header Chat -->
+                <div class="bg-blue-800 text-white p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 bg-white text-blue-800 rounded-full flex items-center justify-center shadow-inner">
+                            <i data-lucide="sparkles" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold">Pelita AI</h2>
+                            <p class="text-blue-200 text-sm flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-green-400"></span> Online - Siap Menjawab
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Tombol Hapus Pesan -->
+                    <div class="relative group">
+                        <button onclick="clearChat()" class="text-blue-200 hover:text-white hover:bg-blue-700 p-2.5 rounded-full transition-colors flex items-center justify-center focus:outline-none">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                        <div class="tooltip hidden absolute -bottom-10 right-0 bg-slate-800 text-white text-xs px-3 py-1.5 rounded whitespace-nowrap shadow-lg">
+                            Hapus Obrolan
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Area Chat -->
+                <div id="chat-box" class="flex-grow bg-slate-50 p-4 overflow-y-auto chat-scroll flex flex-col gap-4">
+                    <!-- Pesan Pembuka -->
+                    <div class="flex gap-3 max-w-[85%] self-start">
+                        <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 mt-1">
+                            <i data-lucide="bot" class="w-5 h-5"></i>
+                        </div>
+                        <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 text-slate-700 leading-relaxed">
+                            <p>Syalom! Saya adalah Pelita AI, asisten kerohanian Anda. Apakah ada pertanyaan Alkitab, topik kerohanian, atau pergumulan yang ingin Anda diskusikan hari ini?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Area Input Box -->
+                <div class="p-4 bg-white border-t border-slate-200">
+                    <form id="chat-form" class="flex gap-2">
+                        <input type="text" id="chat-input" class="flex-grow bg-slate-100 border-none rounded-full px-5 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-slate-700" placeholder="Ketik pertanyaan Anda tentang firman Tuhan di sini..." required autocomplete="off">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 w-12 h-12 flex items-center justify-center shadow-md transition-colors" id="send-btn">
+                            <i data-lucide="send" class="w-5 h-5 ml-1"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-slate-900 text-slate-400 py-8 text-center mt-auto">
+        <div class="max-w-6xl mx-auto px-4">
+            <p class="mb-2 text-white font-medium flex items-center justify-center gap-2">
+                <i data-lucide="sun" class="w-5 h-5 text-yellow-300"></i> Pelita Rohani
+            </p>
+            <p class="text-sm">© 2026 Pelita Rohani | pelitarohani.my.id</p>
+            <p class="text-xs mt-2 opacity-60">Didesain dengan damai sejahtera.</p>
+        </div>
+    </footer>
+
+    <!-- Script Logika SPA, Ikon, & AI Gemini -->
+    <script>
+        lucide.createIcons();
+
+        function showPage(pageId) {
+            const allPages = document.querySelectorAll('.page-section');
+            allPages.forEach(page => {
+                page.classList.add('hidden-page');
+                page.classList.remove('fade-in');
+            });
+
+            const selectedPage = document.getElementById('page-' + pageId);
+            if (selectedPage) {
+                selectedPage.classList.remove('hidden-page');
+                void selectedPage.offsetWidth; 
+                selectedPage.classList.add('fade-in');
+            }
+
+            const allNavBtns = document.querySelectorAll('.nav-btn');
+            allNavBtns.forEach(btn => {
+                btn.classList.remove('text-white', 'bg-blue-800');
+                if(btn.id !== 'nav-ai') btn.classList.add('text-blue-100');
+            });
+            
+            const activeBtn = document.getElementById('nav-' + pageId);
+            if(activeBtn && activeBtn.id !== 'nav-ai') {
+                activeBtn.classList.remove('text-blue-100');
+                activeBtn.classList.add('text-white', 'bg-blue-800');
+            } else if (activeBtn && activeBtn.id === 'nav-ai') {
+                activeBtn.classList.add('bg-blue-800');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        document.getElementById('nav-beranda').classList.add('text-white', 'bg-blue-800');
+
+        // LOGIKA ASISTEN AI
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
+        const chatBox = document.getElementById('chat-box');
+        const sendBtn = document.getElementById('send-btn');
+        const apiKey = ""; 
+
+        function formatText(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-900">$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/\n/g, '<br>');
+        }
+
+        function scrollToBottom() {
+            chatBox.scrollTo({ top: chatBox.scrollHeight, behavior: 'smooth' });
+        }
+
+        function appendUserMessage(message) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-3 max-w-[85%] self-end fade-in';
+            msgDiv.innerHTML = `
+                <div class="bg-blue-600 text-white p-4 rounded-2xl rounded-tr-none shadow-sm text-sm md:text-base">
+                    ${message}
+                </div>
+            `;
+            chatBox.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        function showTypingIndicator() {
+            const msgDiv = document.createElement('div');
+            msgDiv.id = 'typing-indicator';
+            msgDiv.className = 'flex gap-3 max-w-[85%] self-start';
+            msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 mt-1">
+                    <i data-lucide="bot" class="w-5 h-5"></i>
+                </div>
+                <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 flex items-center gap-1 h-[52px]">
+                    <div class="w-2 h-2 bg-blue-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-blue-400 rounded-full typing-dot"></div>
+                    <div class="w-2 h-2 bg-blue-400 rounded-full typing-dot"></div>
+                </div>
+            `;
+            chatBox.appendChild(msgDiv);
+            lucide.createIcons();
+            scrollToBottom();
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        function appendAIMessage(message) {
+            removeTypingIndicator();
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex gap-3 max-w-[85%] self-start fade-in';
+            msgDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 mt-1">
+                    <i data-lucide="bot" class="w-5 h-5"></i>
+                </div>
+                <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 text-slate-700 leading-relaxed text-sm md:text-base">
+                    ${formatText(message)}
+                </div>
+            `;
+            chatBox.appendChild(msgDiv);
+            lucide.createIcons();
+            scrollToBottom();
+        }
+
+        function clearChat() {
+            chatBox.innerHTML = '';
+            const initialMsg = document.createElement('div');
+            initialMsg.className = 'flex gap-3 max-w-[85%] self-start fade-in';
+            initialMsg.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0 mt-1">
+                    <i data-lucide="bot" class="w-5 h-5"></i>
+                </div>
+                <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 text-slate-700 leading-relaxed">
+                    <p>Syalom! Obrolan telah dibersihkan. Apakah ada pertanyaan Alkitab, topik kerohanian, atau pergumulan yang ingin Anda diskusikan kembali?</p>
+                </div>
+            `;
+            chatBox.appendChild(initialMsg);
+            lucide.createIcons();
+        }
+
+        async function fetchWithRetry(url, options, maxRetries = 5) {
+            const delays = [1000, 2000, 4000, 8000, 16000];
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return await response.json();
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    await new Promise(res => setTimeout(res, delays[i]));
+                }
+            }
+        }
+
+        async function getGeminiResponse(userQuery) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const systemPrompt = "Anda adalah 'Pelita AI', asisten rohani Kristen yang bijaksana, penuh kasih, dan menenangkan. Tugas Anda adalah menjawab pertanyaan pengguna tentang kerohanian Kristen, Alkitab, serta memberikan nasihat dan penghiburan. Selalu sertakan ayat Alkitab yang relevan jika memungkinkan. Gunakan bahasa Indonesia yang sopan, bersahabat, dan memotivasi. Format teks menggunakan markdown jika perlu ditekankan.";
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            const options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            };
+
+            try {
+                const result = await fetchWithRetry(url, options);
+                const textResponse = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                if(textResponse) {
+                    appendAIMessage(textResponse);
+                } else {
+                    appendAIMessage("Maaf, saya tidak dapat merumuskan jawaban saat ini. Silakan coba beberapa saat lagi.");
+                }
+            } catch (error) {
+                console.error("API Error:", error);
+                appendAIMessage("Terjadi kesalahan koneksi. Mohon periksa jaringan Anda dan coba tanyakan lagi.");
+            }
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            appendUserMessage(message);
+            
+            chatInput.value = '';
+            chatInput.disabled = true;
+            sendBtn.disabled = true;
+            sendBtn.innerHTML = '<i data-lucide="loader-2" class="w-5 h-5 animate-spin ml-1"></i>';
+            lucide.createIcons();
+
+            showTypingIndicator();
+            await getGeminiResponse(message);
+
+            chatInput.disabled = false;
+            sendBtn.disabled = false;
+            sendBtn.innerHTML = '<i data-lucide="send" class="w-5 h-5 ml-1"></i>';
+            lucide.createIcons();
+            chatInput.focus();
+        });
+
+    </script>
+</body>
+</html>
